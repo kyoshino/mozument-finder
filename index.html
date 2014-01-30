@@ -1,86 +1,17 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
     <title>Mozilla SF Monument Mozillian Finder</title>
-    <style>
-      body {
-        margin: 0;
-        background: #666 url(http://people.mozilla.org/SF_Monument/IMAGES/main.jpg) center top;
-        text-align: center;
-      }
-      h1 {
-        color: rgba(255, 255, 255, .8);
-        text-shadow: .1rem .1rem .5rem rgba(0, 0, 0, .5);
-        font-size: 5em;
-      }
-      h1, p, div {
-        margin: 3rem;
-      }
-      input {
-        border: 0;
-        padding: 1rem;
-        color: rgba(0, 0, 0, .8);
-        background: rgba(255, 255, 255, .6);
-        box-shadow: .1rem .1rem .5rem rgba(0, 0, 0, .6);
-        font-size: 3em;
-        text-align: center;
-      }
-      table {
-        border: 1px;
-        width: 100%;
-        color: rgba(0, 0, 0, .8);
-      }
-      th, td {
-        padding: .5em 1em;
-        width: 15%;
-        background: rgba(255, 255, 255, .6);
-        box-shadow: .1rem .1rem .5rem rgba(0, 0, 0, .6);
-      }
-      th:first-of-type {
-        width: 40%;
-      }
-    </style>
+    <link rel="stylesheet" type="text/css" media="screen" href="/mozument-finder/static/styles/base.css">
   </head>
   <body>
     <h1>Mozilla SF Monument Mozillian Finder</h1>
-    <p><input placeholder="Loading..." autofocus disabled></p>
-    <div></div>
-    <script type="application/javascript;version=1.8">
-      window.addEventListener('DOMContentLoaded', function () {
-        'use strict';
-
-        let $input = document.querySelector('input');
-        let $result = document.querySelector('div');
-        let data = [];
-        let req = new XMLHttpRequest();
-
-        req.overrideMimeType('application/json; charset=utf-8');
-        req.addEventListener('load', function (event) {
-          $input.disabled = false;
-          $input.placeholder = 'Name';
-          data = JSON.parse(event.target.responseText).monument;
-        });
-        req.open('get', 'lib/mozmonument2json/mozmonument.json', true);
-        req.send();
-
-        $input.addEventListener('input', function (event) {
-          let input = RegExp(event.target.value.toLowerCase());
-          let result = ['<tr><td>' + person.name + '</td>'
-                          + '<td>' + person.side + '</td>'
-                          + '<td>' + person.panel + '</td>'
-                          + '<td>' + person.row + '</td>'
-                          + '<td>' + person.number + '</td></tr>'
-                        for (person of data) if (input.test(person.name.toLowerCase()))];
-          if (result.length) {
-            $result.innerHTML = '<table><tbody>'
-                              + '<tr><th>Name</th><th>Side</th><th>Panel</th><th>Row</th><th>Number</th></tr>'
-                              + result.join('') + '</tbody></table>';
-          } else {
-            $result.innerHTML = '<p>Not Found :(</p>';
-          }
-        })
-      });
-    </script>
+    <p><input placeholder="Loading..." disabled></p>
+    <div hidden></div>
+    <p role="status"></p>
+    <p><a href="https://github.com/kyoshino/mozument-finder">Repo on GitHub</a></p>
+    <script src="/mozument-finder/static/scripts/base.js"></script>
   </body>
 </html>

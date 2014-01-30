@@ -1,0 +1,93 @@
+@font-face {
+  font-family: "Fira Sans";
+  src: local("Fira Sans Regular"),
+       url("/mozument-finder/static/fonts/FiraSans-Regular.woff") format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  margin: 0;
+  color: rgba(255, 255, 255, .9);
+  background: #75675C url("https://blog.mozilla.org/community/files/2013/10/monument-wide.jpg") center top;
+  background-size: 200%;
+  line-height: 1.2;
+  font-family: "Fira Sans", sans-serif;
+  text-align: center;
+  text-shadow: 0 0 .4rem rgba(0, 0, 0, .8);
+}
+
+h1 {
+  font-size: 5rem;
+  font-weight: normal;
+  text-shadow: 0 0 .4rem rgba(0, 0, 0, .8);
+}
+
+h1, div, p {
+  margin: 3rem;
+}
+
+table {
+  border: .1rem;
+  width: 100%;
+  color: rgba(0, 0, 0, .8);
+  table-layout: fixed;
+  text-shadow: none;
+}
+
+th, td {
+  padding: .5rem 1rem;
+  background: rgba(255, 255, 255, .7);
+  box-shadow: 0 0 .4rem rgba(0, 0, 0, .8);
+}
+
+th {
+  width: 50%;
+  font-weight: normal;
+}
+
+input {
+  border: 0;
+  padding: 1rem;
+  width: 75%;
+  color: rgba(0, 0, 0, .8);
+  background: rgba(255, 255, 255, .7);
+  box-shadow: 0 0 .4rem rgba(0, 0, 0, .8);
+  font-size: 3rem;
+  text-align: center;
+  text-shadow: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+@media (max-width: 640px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  h1, p, div {
+    margin: 1.5rem;
+  }
+
+  input {
+    padding: .5rem;
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 320px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h1, p, div {
+    margin: 1rem;
+  }
+
+  input {
+    font-size: 1rem;
+  }
+}
