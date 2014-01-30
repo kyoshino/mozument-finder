@@ -3,14 +3,15 @@
 window.addEventListener('DOMContentLoaded', function () {
   var $input = document.querySelector('input'),
       $result = document.querySelector('div'),
+      $tbody = document.querySelector('tbody'),
       $status = document.querySelector('[role="status"]'),
       req = new XMLHttpRequest(),
       async_queue = [],
-      rows = [],
       names = [];
 
   req.addEventListener('load', function () {
-    var data = JSON.parse(req.responseText);
+    var data = JSON.parse(req.responseText),
+        rows = [];
 
     if (!data || !data.monument) {
       $status.textContent = 'Couldn’t load the data :(';
@@ -19,27 +20,34 @@ window.addEventListener('DOMContentLoaded', function () {
 
     data.monument.forEach(function (person) {
       names.push(person.name.toLowerCase());
-      rows.push('<tr>' +
-                '<td>' + person.name + '</td>' +
-                '<td>' + [person.side, person.panel, person.row, person.number].join(', ') + '</td>' +
-                '</tr>');
+      rows.push('<tr><td><a href="https://mozillians.org/search/?q=' + encodeURI(person.name) +'">' +
+                person.name + '</a></td>' +
+                '<td><a href="http://people.mozilla.org/SF_Monument/IMAGES/' +
+                { '1': 'front', '2': 'left', '3': 'back', '4': 'right' }[person.side] + '_' +
+                { 'upper': 'top', 'lower': 'bottom' }[person.panel] + '.jpg">' +
+                [person.side, person.panel, person.row, person.number].join(', ') + '</a></td></tr>');
     });
 
-    $result.innerHTML = '<table>'
-                      + '<thead><tr><th>Name</th><th>Side, Panel, Row, Number</th></tr></thead>'
-                      + '<tbody>' + rows.join('') + '</tbody>'
-                      + '</table>';
+    $tbody.innerHTML = rows.join('');
     $input.placeholder = 'Name';
     $input.disabled = false;
     $input.focus();
-    rows = document.querySelector('tbody').rows;
+
+    window.dispatchEvent(new CustomEvent('hashchange'));
   });
+
+  req.addEventListener('error', function () {
+    $status.textContent = 'Couldn’t load the data :(';
+  });
+
   req.open('GET', '/mozument-finder/lib/mozmonument2json/mozmonument.json', true);
   req.overrideMimeType('application/json; charset=utf-8');
   req.send();
 
   $input.addEventListener('input', function () {
     var query = $input.value;
+
+    history.replaceState({}, document.title, (query) ? '#' + encodeURI(query) : '.');
 
     if (!query || query.length < 3) {
       $result.hidden = true;
@@ -58,7 +66,7 @@ window.addEventListener('DOMContentLoaded', function () {
           count++;
         }
 
-        rows[index].hidden = !match;
+        $tbody.rows[index].hidden = !match;
       });
 
       $result.hidden = count === 0;
@@ -71,6 +79,17 @@ window.addEventListener('DOMContentLoaded', function () {
   window.addEventListener('message', function (event) {
     if (event.source === window && event.data === 'AsyncEvent' && async_queue.length) {
       async_queue.shift().call();
+    }
+  });
+
+  window.addEventListener('hashchange', function () {
+    if (location.hash) {
+      var query = decodeURI(location.hash.substr(1));
+
+      if (query) {
+        $input.value = query;
+        $input.dispatchEvent(new CustomEvent('input'));
+      }
     }
   });
 });

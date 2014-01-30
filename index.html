@@ -2,14 +2,19 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="width=device-width, user-scalable=false">
     <title>Mozilla SF Monument Mozillian Finder</title>
     <link rel="stylesheet" type="text/css" media="screen" href="/mozument-finder/static/styles/base.css">
   </head>
   <body>
     <h1>Mozilla SF Monument Mozillian Finder</h1>
     <p><input placeholder="Loading..." disabled></p>
-    <div hidden></div>
+    <div hidden>
+      <table>
+        <thead><tr><th>Name</th><th>Side, Panel, Row, Number</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
     <p role="status"></p>
     <p><a href="https://github.com/kyoshino/mozument-finder">Repo on GitHub</a></p>
     <script src="/mozument-finder/static/scripts/base.js"></script>
